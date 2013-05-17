@@ -2,9 +2,10 @@
 function validPosition(x, y) {
 	for (var i =0; i < Game.planets.length; i++)
 	{
-		if ( Utils.distance(x, y, Game.planets[i].x, Game.planets[i].y) < 0.03)
+		if ( Utils.distance(x, y, Game.planets[i].x, Game.planets[i].y) < Planet.PLANET_SIZE)
 			return false;
-		else if (x < 0.03 || y < 0.03 || x > 0.97 || y > 0.97)
+		else if (x < Planet.PLANET_SIZE || y < Planet.PLANET_SIZE || 
+				x > Interface.width - Planet.PLANET_SIZE || y > Interface.height - Planet.PLANET_SIZE )
 			return false;
 	}
 	return true;
@@ -23,20 +24,21 @@ Game.AI_INITIAL_POP = 100;
 Game.player = null;
 Game.planets = [];
 Game.aiPlayers = [];
-Game.stars = []
 
 Game.update = function(){
 }
 
 Game.run = function() {
-	Interface.clear();
-	Interface.draw();
+
 }
 
 Game.setup = function() {
 	for(var i=0; i < Game.NUM_STARS; i++)
 	{
-		Game.stars[i] = new Star(Math.random(), Math.random());
+		var star = new fabric.Circle({
+			radius: 2, fill: 'rgba(255, 255, 255, 0.2)', left: Math.random() * Interface.width, top: Math.random() * Interface.height});
+		star.selectable = false;
+		Interface.canvas.add(star);
 	}
 
 	Game.player = new Player(0);
@@ -46,8 +48,8 @@ Game.setup = function() {
 		var x = 0; var y =0;
 		do
 		{
-			x = Math.random();
-			y = Math.random();
+			x = Math.random() * Interface.width;
+			y = Math.random() * Interface.height;
 		} while (!validPosition(x, y));
 		Game.planets[i] = new Planet(i, x, y, null, Math.floor(Math.random()*(Game.MAX_INITIAL_POP - 
 			Game.MIN_INITIAL_POP)+Game.MIN_INITIAL_POP));
@@ -55,11 +57,11 @@ Game.setup = function() {
 	
 	for (var i=0; i < Game.NUM_AI_PLAYERS; i++) {
 		Game.aiPlayers[i] = new Player(i+1);
-		Game.planets[i+1].owner = Game.aiPlayers[i];
 		Game.planets[i+1].population = Game.AI_INITIAL_POP;
+		Game.planets[i+1].changeOwner(Game.aiPlayers[i]);
 	}
-	Game.planets[0].owner = Game.player;
+	Game.planets[0].changeOwner(Game.player);
 	Game.planets[0].population = Game.PLAYER_INITIAL_POP;
 
-	
+	Interface.canvas.renderAll();
 }
