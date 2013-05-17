@@ -12,3 +12,13 @@ Interface.canvas.renderAll();
 
 Interface.width = Interface.canvas.getWidth();
 Interface.height = Interface.canvas.getHeight();
+
+//Interface.canvas.on("before:selection:cleared", Interface.handleEvents);
+//Interface.canvas.on("selection:cleared", Interface.handleEvents);
+//Interface.canvas.on("selection:created", Interface.handleEvents);
+
+Interface.handleEvents = function(e) {
+	if (e == "before:selection:cleared") {
+		alert("test");
+	}
+}

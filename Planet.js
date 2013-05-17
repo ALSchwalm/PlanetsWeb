@@ -13,22 +13,25 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.group = new fabric.Group([ this.text, this.circle ], { left: this.x, top: this.y});
 
 	this.group.hasControls = false;
-	this.group.selectable = false;
+	this.group.selectable  = false;
 	this.group.lockMovementX = this.group.lockMovementY = true;
 	Interface.canvas.add(this.group);
-
 }
 
 Planet.PLANET_SIZE = 15;
 
 Planet.prototype.changeOwner = function(newOwner)
 {
+	if (this.owner != null) {
+		this.owner.planets.splice(this.owner.planets.indexOf(this), 1);
+	}
 	this.owner = newOwner;
+	this.owner.planets.push(this);
 	this.circle.fill = newOwner.color;
 	
 	if (this.owner == Game.player)
 	{
-		this.group.selectable = true;
+		this.group.selectable  = true;
 	}
 }
 
