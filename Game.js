@@ -2,10 +2,10 @@
 function validPosition(x, y) {
 	for (var i =0; i < Game.planets.length; i++)
 	{
-		if ( Utils.distance(x, y, Game.planets[i].x, Game.planets[i].y) < Planet.PLANET_SIZE)
+		if ( Utils.distance(x, y, Game.planets[i].x, Game.planets[i].y) < Planet.PLANET_SIZE*2)
 			return false;
-		else if (x < Planet.PLANET_SIZE || y < Planet.PLANET_SIZE || 
-				x > Interface.width - Planet.PLANET_SIZE || y > Interface.height - Planet.PLANET_SIZE )
+		else if (x < Planet.PLANET_SIZE*2 || y < Planet.PLANET_SIZE*2 || 
+				x > Interface.width - Planet.PLANET_SIZE*2 || y > Interface.height - Planet.PLANET_SIZE*2 )
 			return false;
 	}
 	return true;
@@ -57,11 +57,11 @@ Game.setup = function() {
 	
 	for (var i=0; i < Game.NUM_AI_PLAYERS; i++) {
 		Game.aiPlayers[i] = new Player(i+1);
-		Game.planets[i+1].population = Game.AI_INITIAL_POP;
+		Game.planets[i+1].changePopulation(Game.AI_INITIAL_POP);
 		Game.planets[i+1].changeOwner(Game.aiPlayers[i]);
 	}
 	Game.planets[0].changeOwner(Game.player);
-	Game.planets[0].population = Game.PLAYER_INITIAL_POP;
+	Game.planets[0].changePopulation(Game.PLAYER_INITIAL_POP);
 
 	Interface.canvas.renderAll();
 }
