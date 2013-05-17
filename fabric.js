@@ -8672,7 +8672,7 @@ fabric.Shadow = fabric.util.createClass(/** @scope fabric.Shadow.prototype */ {
           top: 0,
           left: 0
         };
-        this.deactivateAllWithDispatch();
+        //this.deactivateAllWithDispatch();
       }
       else {
         // determine if it's a drag or rotate case
@@ -8688,9 +8688,9 @@ fabric.Shadow = fabric.util.createClass(/** @scope fabric.Shadow.prototype */ {
         }
         else {
           if (target !== this.getActiveGroup()) {
-            this.deactivateAll();
+            //this.deactivateAll();
           }
-          this.setActiveObject(target, e);
+          //this.setActiveObject(target, e);
         }
 
         this._setupCurrentTransform(e, target);

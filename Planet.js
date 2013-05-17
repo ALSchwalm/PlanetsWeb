@@ -15,6 +15,7 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.group.hasControls = false;
 	this.group.selectable  = false;
 	this.group.lockMovementX = this.group.lockMovementY = true;
+	this.group.planet = this;
 	Interface.canvas.add(this.group);
 }
 
@@ -41,4 +42,9 @@ Planet.prototype.changePopulation = function(newPopulation)
 	this.text.text = this.population.toString();
 
 	Interface.canvas.renderAll();
+}
+
+Planet.prototype.launchFleet = function(destination, population) {
+	console.log("created fleet")
+	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, this, destination, population));
 }
