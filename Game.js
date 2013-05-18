@@ -26,11 +26,21 @@ Game.planets = [];
 Game.aiPlayers = [];
 
 Game.update = function(){
+	for(var i=0; i < Game.aiPlayers.length; i++) {
+		for(var j=0; j < Game.aiPlayers[i].fleets.length; j++) {
+			Game.aiPlayers[i].fleets[j].update();
+		}
+	}
+	
+	for(var i=0; i < Game.player.fleets.length; i++) {
+		Game.player.fleets[i].update();
+	}
+	
 }
 
 Game.run = function() {
+	Game.update();
 	Interface.canvas.renderAll();
-	setTimeout(Game.run, 10);
 }
 
 Game.setup = function() {

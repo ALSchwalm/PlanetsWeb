@@ -16,3 +16,9 @@ function Fleet(_x, _y, _owner, _source, _destination, _population) {
 	}
 	Interface.canvas.renderAll();
 }
+
+Fleet.prototype.update = function() {
+	for(var i=0; i < this.ships.length; i++) {
+		this.ships[i].update();
+	}
+}
