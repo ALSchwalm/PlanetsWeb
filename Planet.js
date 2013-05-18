@@ -10,7 +10,7 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.text = new fabric.Text(this.population.toString(), { fontSize: 15, fontFamily: 'Arial' });
 	this.circle = new fabric.Circle({radius: Planet.PLANET_SIZE, fill: 'white'})
 	
-	this.group = new fabric.Group([ this.text, this.circle ], { left: this.x, top: this.y});
+	this.group = new fabric.Group([ this.circle, this.text], { left: this.x, top: this.y});
 
 	this.group.hasControls = false;
 	this.group.selectable  = false;

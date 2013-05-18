@@ -29,7 +29,8 @@ Game.update = function(){
 }
 
 Game.run = function() {
-
+	Interface.canvas.renderAll();
+	setTimeout(Game.run, 10);
 }
 
 Game.setup = function() {

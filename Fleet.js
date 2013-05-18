@@ -7,10 +7,12 @@ function Fleet(_x, _y, _owner, _source, _destination, _population) {
 	this.destination = _destination;
 	this.population = _population;
 	this.ships = []
-	
-	for(var i =0; i < this.population; i++)
+	console.log("fleet constructing")
+	for(var i=0; i < _population; i++)
 	{ 
-		this.ship[i] = Ship(this.x, this.y, this);
+		console.log("created new ship")
+		this.ships.push(new Ship(this.x, this.y, this));
 		//TODO make group of every ship.
 	}
+	Interface.canvas.renderAll();
 }
