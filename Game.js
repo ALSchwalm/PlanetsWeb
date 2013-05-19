@@ -35,12 +35,20 @@ Game.update = function(){
 	for(var i=0; i < Game.player.fleets.length; i++) {
 		Game.player.fleets[i].update();
 	}
+	Interface.canvas.renderAll();
 	
 }
 
-Game.run = function() {
-	Game.update();
-	//Interface.canvas.renderAll();
+Game.applyPhysics = function() {
+	for(var i=0; i < Game.aiPlayers.length; i++) {
+		for(var j=0; j < Game.aiPlayers[i].fleets.length; j++) {
+			Game.aiPlayers[i].fleets[j].applyPhysics();
+		}
+	}
+	
+	for(var i=0; i < Game.player.fleets.length; i++) {
+		Game.player.fleets[i].applyPhysics();
+	}
 }
 
 Game.setup = function() {

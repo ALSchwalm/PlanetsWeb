@@ -22,3 +22,9 @@ Fleet.prototype.update = function() {
 		this.ships[i].update();
 	}
 }
+
+Fleet.prototype.applyPhysics = function() {
+	for(var i=0; i < this.ships.length; i++) {
+		this.ships[i].applyPhysics();
+	}
+}

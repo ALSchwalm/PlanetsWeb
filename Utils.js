@@ -14,14 +14,47 @@ Utils.manhattanDistance = function(x1, y1, x2, y2) {
 	return Math.abs(x2 - x1) + Math.abs(y2 - y1);
 }
 
-Utils.getVector = function(x1, y1, x2, y2) {
-	return [x2 - x1, 
-			y2 - y1]
-}
-			
-Utils.normalize = function(vector) {
-	var mag = Math.sqrt(Math.pow(vector[0], 2) + Math.pow(vector[1], 2))
-	return [vector[0]/mag, vector[1]/mag];
+Utils.colors = ["aqua", "brown", "aquamarine"];
+
+
+function Vector(magnitude, direction) {
+	this.magnitude = magnitude;
+	this.direction = direction;
 }
 
-Utils.colors = ["aqua", "brown", "aquamarine"];
+Vector.prototype.getXY = function() {
+	return [this.magnitude*Math.cos(this.direction),
+			this.magnitude*Math.sin(this.direction)]
+}
+
+Vector.prototype.limit = function(limit) {
+	if (this.magnitude > limit) {
+		this.magnitude = limit;
+	} else if (this.magnitude < -limit) {
+		this.magnitude = -limit;
+	}
+	return this;
+}
+
+Vector.prototype.normalize = function() {
+	this.magnitude = 1;
+	return this;
+}
+
+Utils.addVector = function(v1, v2) {
+	var comp1 = v1.getXY();
+	var comp2 = v2.getXY();
+	
+	return Utils.createVectorFromXY(comp1[0]+comp2[0], comp1[1]+comp2[1]);
+}
+
+Utils.createVectorFromPoints = function(x1, y1, x2, y2) {
+	var magnitude = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+	var direction = Math.atan2((y2 - y1), (x2 - x1));
+
+	return  new Vector(magnitude, direction);
+}
+
+Utils.createVectorFromXY = function(x, y) {
+	return Utils.createVectorFromPoints(0, 0, x, y);
+}

@@ -25,7 +25,8 @@ html, body {
 <script type="text/javascript" src="Utils.js"></script>
 <script type="text/javascript">
 	Game.setup();
-	setInterval(Game.run, 1000/50);
+	setInterval(Game.update, 1000/50);
+	setInterval(Game.applyPhysics, 1000/25);
 </script>
 </body>
 </html> 
