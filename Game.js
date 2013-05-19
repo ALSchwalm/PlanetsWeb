@@ -40,7 +40,7 @@ Game.update = function(){
 
 Game.run = function() {
 	Game.update();
-	Interface.canvas.renderAll();
+	//Interface.canvas.renderAll();
 }
 
 Game.setup = function() {

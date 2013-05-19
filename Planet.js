@@ -47,4 +47,5 @@ Planet.prototype.changePopulation = function(newPopulation)
 Planet.prototype.launchFleet = function(destination, population) {
 	console.log("created fleet")
 	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, this, destination, population));
+	this.owner.fleets[this.owner.fleets.length -1].update();
 }

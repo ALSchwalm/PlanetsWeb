@@ -33,11 +33,11 @@ Interface.handleEvents = function(monitor, e) {
 
 				if(Interface.canvas.getActiveObject() != null && Interface.canvas.getActiveObject() != undefined && 
 						Game.planets[i].group != Interface.canvas.getActiveObject()) {
-					Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i], 1);
+					Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i], 5);
 					Interface.canvas.discardActiveObject();
 				}
 				else if (Interface.canvas.getActiveGroup() != null && Interface.canvas.getActiveGroup() != undefined) {
-					Interface.canvas.getActiveGroup().objects[0].planet.launchFleet(Game.planets[i], 1);
+					Interface.canvas.getActiveGroup().objects[0].planet.launchFleet(Game.planets[i], 5);
 					Interface.canvas.discardActiveGroup();
 				}
 				else if (Game.planets[i].owner == Game.player) {
