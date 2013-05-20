@@ -3,9 +3,9 @@ function Planet(_ID, _x, _y, _owner, _population)
 {
 	this.x = _x;
 	this.y = _y;
-	this.isSelected = false;
 	this.owner = _owner;
 	this.population = _population;
+	this.growthTrack = 0;
 	
 	this.text = new fabric.Text(this.population.toString(), { fontSize: Planet.PLANET_SIZE, fontFamily: 'Arial' });
 	this.circle = new fabric.Circle({
@@ -25,10 +25,18 @@ function Planet(_ID, _x, _y, _owner, _population)
 }
 
 Planet.PLANET_SIZE = 20;
+Planet.GROWTH_RATE = 1;
 
-Planet.prototype.changeOwner = function(newOwner)
-{
-	if (this.owner != null) {
+Planet.prototype.update = function() {
+	if (this.owner && !(this.growthTrack%=100)) {
+		this.addPopulation(Planet.GROWTH_RATE);
+	}
+	this.growthTrack++;
+	this.text.text = Math.floor(this.population).toString();
+}
+
+Planet.prototype.changeOwner = function(newOwner) {
+	if (this.owner) {
 		this.owner.planets.splice(this.owner.planets.indexOf(this), 1);
 	}
 	this.owner = newOwner;
@@ -41,10 +49,13 @@ Planet.prototype.changeOwner = function(newOwner)
 	}
 }
 
-Planet.prototype.changePopulation = function(newPopulation)
-{
-	this.population = newPopulation;
-	this.text.text = this.population.toString();
+Planet.prototype.addPopulation = function(newPopulation) {
+	this.population += newPopulation;
+}
+
+Planet.prototype.setPopulation = function(newPopulation) {
+	this.population = 0;
+	this.addPopulation(newPopulation);
 }
 
 Planet.prototype.launchFleet = function(destination) {
@@ -52,12 +63,12 @@ Planet.prototype.launchFleet = function(destination) {
 	
 	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, 
 			this, destination, Math.floor(this.owner.percent*this.population)));
-	this.changePopulation(this.population - Math.floor(this.owner.percent*this.population));
+	this.addPopulation(-Math.floor(this.owner.percent*this.population));
 }
 
 Planet.prototype.launchFleetInt = function(destination, population) {
 	if (this.population - population < 0) return;
 	
 	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, this, destination, population));
-	this.changePopulation(this.population - population);
+	this.addPopulation(-population);
 }

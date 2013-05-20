@@ -35,6 +35,11 @@ Game.update = function(){
 	for(var i=0; i < Game.player.fleets.length; i++) {
 		Game.player.fleets[i].update();
 	}
+	
+	for(var i=0; i < Game.planets.length; i++) {
+		Game.planets[i].update();
+	}
+	
 	Interface.canvas.renderAll();
 	
 }
@@ -55,7 +60,11 @@ Game.setup = function() {
 	for(var i=0; i < Game.NUM_STARS; i++)
 	{
 		var star = new fabric.Circle({
-			radius: 2, fill: 'rgba(255, 255, 255, 0.2)', left: Math.random() * Interface.width, top: Math.random() * Interface.height});
+			radius: 2, 
+			fill: 'rgba(255, 255, 255, 0.2)', 
+			left: Math.random() * Interface.width, 
+			top: Math.random() * Interface.height
+		});
 		star.selectable = false;
 		Interface.canvas.add(star);
 	}
@@ -70,17 +79,18 @@ Game.setup = function() {
 			x = Math.random() * Interface.width;
 			y = Math.random() * Interface.height;
 		} while (!validPosition(x, y));
+		
 		Game.planets[i] = new Planet(i, x, y, null, Math.floor(Math.random()*(Game.MAX_INITIAL_POP - 
 			Game.MIN_INITIAL_POP)+Game.MIN_INITIAL_POP));
 	}
 	
 	for (var i=0; i < Game.NUM_AI_PLAYERS; i++) {
 		Game.aiPlayers[i] = new Player(i+1);
-		Game.planets[i+1].changePopulation(Game.AI_INITIAL_POP);
+		Game.planets[i+1].setPopulation(Game.AI_INITIAL_POP);
 		Game.planets[i+1].changeOwner(Game.aiPlayers[i]);
 	}
 	Game.planets[0].changeOwner(Game.player);
-	Game.planets[0].changePopulation(Game.PLAYER_INITIAL_POP);
+	Game.planets[0].setPopulation(Game.PLAYER_INITIAL_POP);
 
 	Interface.canvas.renderAll();
 }

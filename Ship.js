@@ -36,13 +36,13 @@ Ship.prototype.update = function(){
 		this.parentFleet.ships.splice(this.parentFleet.ships.indexOf(this), 1);
 		
 		if (this.destination.owner != this.owner) {
-			this.destination.changePopulation(this.destination.population - 1);
+			this.destination.addPopulation(-1);
 			if (this.destination.population < 0) {
 				this.destination.changeOwner(this.owner);
-				this.destination.changePopulation(-this.destination.population);
+				this.destination.addPopulation(1);
 			}
 		} else {
-			this.destination.changePopulation(this.destination.population + 1);
+			this.destination.addPopulation(1);
 		}
 		
 	}
