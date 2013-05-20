@@ -9059,7 +9059,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 
         if (target !== this.getActiveGroup() && target !== this.getActiveObject()) {
           //this.deactivateAll();
-          //this.setActiveObject(target, e);
+          this.setActiveObject(target, e);
         }
 
         this._setupCurrentTransform(e, target);
@@ -9205,7 +9205,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
           this._setCursor(this.moveCursor);
         }
 
-        this.renderAll();
+        //this.renderAll();
       }
       this.fire('mouse:move', { target: target, e: e });
       target && target.fire('mousemove', { e: e });

@@ -5,4 +5,5 @@ function Player(_ID) {
 	this.planets = [];
 	this.fleets = [];
 	this.selectedPlanets = [];
+	this.percent = 0.5;
 }

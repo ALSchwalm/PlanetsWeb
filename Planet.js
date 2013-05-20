@@ -42,7 +42,17 @@ Planet.prototype.changePopulation = function(newPopulation)
 	this.text.text = this.population.toString();
 }
 
-Planet.prototype.launchFleet = function(destination, population) {
-	//console.log("created fleet")
+Planet.prototype.launchFleet = function(destination) {
+	if (this.population - Math.floor(this.owner.percent*this.population) < 0) return;
+	
+	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, 
+			this, destination, Math.floor(this.owner.percent*this.population)));
+	this.changePopulation(this.population - Math.floor(this.owner.percent*this.population));
+}
+
+Planet.prototype.launchFleetInt = function(destination, population) {
+	if (this.population - population < 0) return;
+	
 	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, this, destination, population));
+	this.changePopulation(this.population - population);
 }

@@ -9,6 +9,7 @@ Interface.BACKGROUND_COLOR = "#111111";
 
 Interface.canvas.backgroundColor = Interface.BACKGROUND_COLOR;
 Interface.canvas.hoverCursor = 'default'
+Interface.canvas.moveCursor  = 'default'
 Interface.canvas.renderAll();
 
 Interface.width = Interface.canvas.getWidth();
@@ -35,19 +36,18 @@ Interface.handleEvents = function(monitor, options) {
 			{
 				if (Game.planets[i].group.containsPoint(options.e)) {
 
-					if(Interface.canvas.getActiveObject() != null && Interface.canvas.getActiveObject() != undefined && 
+					if(Interface.canvas.getActiveObject() && 
 							Game.planets[i].group != Interface.canvas.getActiveObject()) {
-						Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i], 150);
+						Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i]);
 						Interface.canvas.discardActiveObject();
-					}
-					else if (Interface.canvas.getActiveGroup() != null && Interface.canvas.getActiveGroup() != undefined) {
-						Interface.canvas.getActiveGroup().forEachObject(function (o) {
-							o.planet.launchFleet(Game.planets[i], 150);
-						});
 						Interface.canvas.discardActiveGroup();
 					}
-					else if (Game.planets[i].owner == Game.player) {
-						Interface.canvas.setActiveObject(Game.planets[i].group);
+					else if (Interface.canvas.getActiveGroup()) {
+						Interface.canvas.getActiveGroup().forEachObject(function (o) {
+							o.planet.launchFleet(Game.planets[i]);
+						});
+						Interface.canvas.discardActiveGroup();
+						Interface.canvas.discardActiveObject();
 					}
 					break;
 				}
