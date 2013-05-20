@@ -1872,7 +1872,7 @@ fabric.Collection = {
     for (var i = arguments.length; i--; ) {
       this._onObjectAdded(arguments[i]);
     }
-    this.renderOnAddition && this.renderAll();
+    //this.renderOnAddition && this.renderAll();
     return this;
   },
 
@@ -1913,7 +1913,7 @@ fabric.Collection = {
       this._onObjectRemoved(object);
     }
 
-    this.renderAll && this.renderAll();
+    //this.renderAll && this.renderAll();
     return object;
   },
 

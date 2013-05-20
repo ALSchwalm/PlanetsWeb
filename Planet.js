@@ -7,7 +7,7 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.owner = _owner;
 	this.population = _population;
 	
-	this.text = new fabric.Text(this.population.toString(), { fontSize: 15, fontFamily: 'Arial' });
+	this.text = new fabric.Text(this.population.toString(), { fontSize: Planet.PLANET_SIZE, fontFamily: 'Arial' });
 	this.circle = new fabric.Circle({radius: Planet.PLANET_SIZE, fill: 'white'})
 	
 	this.group = new fabric.Group([ this.circle, this.text], { left: this.x, top: this.y});
@@ -19,7 +19,7 @@ function Planet(_ID, _x, _y, _owner, _population)
 	Interface.canvas.add(this.group);
 }
 
-Planet.PLANET_SIZE = 15;
+Planet.PLANET_SIZE = 20;
 
 Planet.prototype.changeOwner = function(newOwner)
 {
