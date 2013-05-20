@@ -12,10 +12,12 @@ function Ship(_x, _y, _parentFleet) {
 	this.view = new fabric.Triangle({
 		left: this.x,
 		top: this.y,
-		fill: "red",
-		width: 3,
-		height: 7,
-		selectable: false
+		fill: this.owner.color,
+		width: 7,
+		height: 12,
+		selectable: false,
+		strokeWidth: 1,
+        stroke: 'black'
 	});
 }
 
@@ -47,7 +49,7 @@ Ship.prototype.update = function(){
 
 	this.x += this.velocity.getXY()[0]; 
 	this.y += this.velocity.getXY()[1];
-	this.angle = (Math.PI/2 - this.velocity.direction)*180/Math.PI; //TODO fix this
+	this.angle = ( this.velocity.direction)*180/Math.PI + 90; //TODO fix this
 	
 	this.view.set('left', this.x.toString());
 	this.view.set('top', this.y.toString());
