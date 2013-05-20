@@ -21,6 +21,7 @@ function Ship(_x, _y, _parentFleet) {
 }
 
 Ship.AVOID_FACTOR = 700;
+Ship.AVOID_DISTANCE = Planet.PLANET_SIZE*2;
 Ship.SEPARATE_FACTOR = 2;
 Ship.SEPARATE_DISTANCE = 10;
 Ship.MAX_VELOCITY = 5;
@@ -45,14 +46,19 @@ Ship.prototype.update = function(){
 Ship.prototype.applyPhysics = function() {
 	var accelerationVector = Utils.createVectorFromPoints(this.x, this.y,
 			this.destination.x, this.destination.y).limit(Ship.MAX_ACCELERATION);
-
+	
+	var distance;
+	
 	for (var i=0; i < Game.planets.length; i++) {
 		if (Game.planets[i] === this.parentFleet.source || 
 				Game.planets[i] === this.destination) {
 			continue;
+		} else if ((distance = Utils.distance(this.x, this.y,
+				Game.planets[i].x, Game.planets[i].y)) > Ship.AVOID_DISTANCE) {
+			continue;
 		}
 		
-		var inverseDistance = 1/Math.pow(Utils.distance(this.x, this.y, Game.planets[i].x, Game.planets[i].y),2);
+		var inverseDistance = 1/(distance*distance);
 		
 		var planetVector= Utils.createVectorFromPoints(Game.planets[i].x, Game.planets[i].y,
 			this.x, this.y).limit(Ship.AVOID_FACTOR*inverseDistance);
@@ -63,16 +69,13 @@ Ship.prototype.applyPhysics = function() {
 	for (var i=0; i < this.parentFleet.ships.length; i++) {
 		if (this.parentFleet.ships[i] === this) {
 			continue;
-		} else if (Utils.distance(this.x, this.y, 
-				this.parentFleet.ships[i].x, this.parentFleet.ships[i].y) > Ship.SEPARATE_DISTANCE) {
+		} else if ((distance = Utils.distance(this.x, this.y, 
+				this.parentFleet.ships[i].x, this.parentFleet.ships[i].y)) > Ship.SEPARATE_DISTANCE) {
 			continue;
 		}
 		
-		var inverseDistance = 1/Utils.distance(this.x, this.y, 
-			this.parentFleet.ships[i].x, this.parentFleet.ships[i].y);
-		
 		var shipVector= Utils.createVectorFromPoints(this.parentFleet.ships[i].x, this.parentFleet.ships[i].y,
-			this.x, this.y).limit(Ship.SEPARATE_FACTOR*inverseDistance);
+			this.x, this.y).limit(Ship.SEPARATE_FACTOR*1/distance);
 			
 		accelerationVector= Utils.addVector(shipVector, accelerationVector);
 	}

@@ -2,7 +2,7 @@
 Utils = {}
 
 Utils.distance = function(x1, y1, x2, y2) {
-	return Math.sqrt( Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
+	return Math.sqrt( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
 }
 
 Utils.planetDistance = function(planet1, planet2) {
@@ -49,7 +49,7 @@ Utils.addVector = function(v1, v2) {
 }
 
 Utils.createVectorFromPoints = function(x1, y1, x2, y2) {
-	var magnitude = Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+	var magnitude = Math.sqrt( (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2));
 	var direction = Math.atan2((y2 - y1), (x2 - x1));
 
 	return  new Vector(magnitude, direction);
