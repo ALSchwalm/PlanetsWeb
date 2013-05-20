@@ -40,11 +40,9 @@ Planet.prototype.changePopulation = function(newPopulation)
 {
 	this.population = newPopulation;
 	this.text.text = this.population.toString();
-
-	Interface.canvas.renderAll();
 }
 
 Planet.prototype.launchFleet = function(destination, population) {
-	console.log("created fleet")
+	//console.log("created fleet")
 	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, this, destination, population));
 }
