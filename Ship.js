@@ -8,7 +8,6 @@ function Ship(_x, _y, _parentFleet) {
 	this.y = _y + Math.random();
 	
 	this.velocity = new Vector(0, 0);
-	this.angle = 0;
 	
 	this.view = new fabric.Triangle({
 		left: this.x,
@@ -25,13 +24,25 @@ Ship.AVOID_DISTANCE = Planet.PLANET_SIZE*2;
 Ship.SEPARATE_FACTOR = 2;
 Ship.SEPARATE_DISTANCE = 10;
 Ship.MAX_VELOCITY = 5;
-Ship.MAX_ACCELERATION = 2;
+Ship.PLANET_PULL = 2;
 
+Ship.prototype.angle = 0;
 
 Ship.prototype.update = function(){
 	if (Utils.distance(this.x, this.y, this.destination.x, this.destination.y) < Planet.PLANET_SIZE) {
 		Interface.canvas.remove(this.view);
 		this.parentFleet.ships.splice(this.parentFleet.ships.indexOf(this), 1);
+		
+		if (this.destination.owner != this.owner) {
+			this.destination.changePopulation(this.destination.population - 1);
+			if (this.destination.population < 0) {
+				this.destination.changeOwner(this.owner);
+				this.destination.changePopulation(-this.destination.population);
+			}
+		} else {
+			this.destination.changePopulation(this.destination.population + 1);
+		}
+		
 	}
 
 	this.x += this.velocity.getXY()[0]; 
@@ -45,7 +56,7 @@ Ship.prototype.update = function(){
 
 Ship.prototype.applyPhysics = function() {
 	var accelerationVector = Utils.createVectorFromPoints(this.x, this.y,
-			this.destination.x, this.destination.y).limit(Ship.MAX_ACCELERATION);
+			this.destination.x, this.destination.y).limit(Ship.PLANET_PULL);
 	
 	var distance;
 	

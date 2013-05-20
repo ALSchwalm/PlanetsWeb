@@ -9017,8 +9017,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
       var pointer;
 
       // accept only left clicks
-      var isLeftClick  = 'which' in e ? e.which === 1 : e.button === 1;
-      if (!isLeftClick && !fabric.isTouchSupported) return;
+      //var isLeftClick  = 'which' in e ? e.which === 1 : e.button === 1;
+      //if (!isLeftClick && !fabric.isTouchSupported) return;
 
       if (this.isDrawingMode) {
         pointer = this.getPointer(e);

@@ -21,29 +21,36 @@ Interface.monitorEvent = function(monitor) {
 Interface.monitorEvent("selection:created");
 Interface.monitorEvent("mouse:down");
 
-Interface.handleEvents = function(monitor, e) {
+Interface.handleEvents = function(monitor, options) {
 	if (monitor == "selection:created") {
 		Interface.canvas.getActiveGroup().hasBorders = false;
 		Interface.canvas.getActiveGroup().hasControls = false;
 	}
 	else if (monitor == "mouse:down") {
-		for (var i=0; i < Game.planets.length; i++)
-		{
-			if (Game.planets[i].group.containsPoint(e.e)) {
+		if (options.e.button == 1) {
+			Interface.canvas.discardActiveObject();
+			Interface.canvas.discardActiveGroup();
+		} else if (options.e.button == 0) {	
+			for (var i=0; i < Game.planets.length; i++)
+			{
+				if (Game.planets[i].group.containsPoint(options.e)) {
 
-				if(Interface.canvas.getActiveObject() != null && Interface.canvas.getActiveObject() != undefined && 
-						Game.planets[i].group != Interface.canvas.getActiveObject()) {
-					Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i], 150);
-					Interface.canvas.discardActiveObject();
+					if(Interface.canvas.getActiveObject() != null && Interface.canvas.getActiveObject() != undefined && 
+							Game.planets[i].group != Interface.canvas.getActiveObject()) {
+						Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i], 150);
+						Interface.canvas.discardActiveObject();
+					}
+					else if (Interface.canvas.getActiveGroup() != null && Interface.canvas.getActiveGroup() != undefined) {
+						Interface.canvas.getActiveGroup().forEachObject(function (o) {
+							o.planet.launchFleet(Game.planets[i], 150);
+						});
+						Interface.canvas.discardActiveGroup();
+					}
+					else if (Game.planets[i].owner == Game.player) {
+						Interface.canvas.setActiveObject(Game.planets[i].group);
+					}
+					break;
 				}
-				else if (Interface.canvas.getActiveGroup() != null && Interface.canvas.getActiveGroup() != undefined) {
-					Interface.canvas.getActiveGroup().objects[0].planet.launchFleet(Game.planets[i], 150);
-					Interface.canvas.discardActiveGroup();
-				}
-				else if (Game.planets[i].owner == Game.player) {
-					Interface.canvas.setActiveObject(Game.planets[i].group);
-				}
-				break;
 			}
 		}
 	}
