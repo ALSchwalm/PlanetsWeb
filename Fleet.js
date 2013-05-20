@@ -6,15 +6,19 @@ function Fleet(_x, _y, _owner, _source, _destination, _population) {
 	this.source = _source;
 	this.destination = _destination;
 	this.population = _population;
-	this.ships = []
-	//console.log("fleet constructing")
+	this.ships = [];
+	
+	var tempViews = [];
+
 	for(var i=0; i < _population; i++)
 	{ 
-		//console.log("created new ship")
 		this.ships.push(new Ship(this.x, this.y, this));
+		tempViews.push(this.ships[this.ships.length-1].view);
+		
 		//TODO make group of every ship.
 	}
-	Interface.canvas.renderAll();
+	
+	Interface.canvas.add.apply(Interface.canvas, tempViews);
 }
 
 Fleet.prototype.update = function() {

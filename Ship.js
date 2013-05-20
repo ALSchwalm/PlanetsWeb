@@ -18,8 +18,6 @@ function Ship(_x, _y, _parentFleet) {
 		height: 7,
 		selectable: false
 	});
-	
-	Interface.canvas.add(this.view);
 }
 
 Ship.AVOID_FACTOR = 700;
