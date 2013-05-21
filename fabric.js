@@ -8539,17 +8539,22 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         }
       }
 
-      // do not create group for 1 element only
-      if (group.length === 1) {
-        this.setActiveObject(group[0], e);
-      }
-      else if (group.length > 1) {
-        group = new fabric.Group(group);
-        this.setActiveGroup(group);
-        group.saveCoords();
+		if (group.length <= 0) {
+			return
+		} else if (!this.getActiveGroup()) {
+			group = new fabric.Group(group);
+			this.setActiveGroup(group);
+		} else {
+			for (var i in this.getActiveGroup().getObjects())
+				group.push(this.getActiveGroup().getObjects()[i]);
+			this.discardActiveGroup();
+			for(var i=0; i < group.length; i++)
+				group[i].set('active', true);
+			group = new fabric.Group(group);
+			this.setActiveGroup(group);
+		}
+		group.saveCoords();
         this.fire('selection:created', { target: group });
-        this.renderAll();
-      }
     },
 
     /**
@@ -9034,7 +9039,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 
       var target = this.findTarget(e), corner;
       pointer = this.getPointer(e);
-
+	
       if (this._shouldClearSelection(e, target)) {
         this._groupSelector = {
           ex: pointer.x,

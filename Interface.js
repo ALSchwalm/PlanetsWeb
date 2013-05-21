@@ -35,20 +35,13 @@ Interface.handleEvents = function(monitor, options) {
 			for (var i=0; i < Game.planets.length; i++)
 			{
 				if (Game.planets[i].group.containsPoint(options.e)) {
-
-					if(Interface.canvas.getActiveObject() && 
-							Game.planets[i].group != Interface.canvas.getActiveObject()) {
-						Interface.canvas.getActiveObject().planet.launchFleet(Game.planets[i]);
-						Interface.canvas.discardActiveObject();
-						Interface.canvas.discardActiveGroup();
-					}
-					else if (Interface.canvas.getActiveGroup()) {
+					if (Interface.canvas.getActiveGroup()) {
 						Interface.canvas.getActiveGroup().forEachObject(function (o) {
 							o.planet.launchFleet(Game.planets[i]);
 						});
 						Interface.canvas.discardActiveGroup();
 						Interface.canvas.discardActiveObject();
-					}
+					} 
 					break;
 				}
 			}
