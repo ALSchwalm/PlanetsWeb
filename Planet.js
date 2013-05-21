@@ -24,7 +24,7 @@ function Planet(_ID, _x, _y, _owner, _population)
 	Interface.canvas.add(this.group);
 }
 
-Planet.PLANET_SIZE = 20;
+Planet.PLANET_SIZE = 25;
 Planet.GROWTH_RATE = 1;
 
 Planet.prototype.update = function() {

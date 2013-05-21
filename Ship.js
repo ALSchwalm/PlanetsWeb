@@ -13,16 +13,25 @@ function Ship(_x, _y, _parentFleet) {
 		left: this.x,
 		top: this.y,
 		fill: this.owner.color,
-		width: 7,
-		height: 12,
+		width: 1,
+		height: 1,
 		selectable: false,
 		strokeWidth: 1,
         stroke: 'black'
 	});
+	
+	this.view.setShadow({
+		color: 'rgba(255,255,255, 0.1)',
+		offsetX: '2',
+		offsetY: '2'
+	});
+	
+	this.view.animate('width', 7, {duration: Planet.PLANET_SIZE*10});
+	this.view.animate('height', 12, {duration: Planet.PLANET_SIZE*10});
 }
 
-Ship.AVOID_FACTOR = 700;
-Ship.AVOID_DISTANCE = Planet.PLANET_SIZE*2;
+Ship.AVOID_FACTOR = 1000;
+Ship.AVOID_DISTANCE = Planet.PLANET_SIZE;
 Ship.SEPARATE_FACTOR = 2;
 Ship.SEPARATE_DISTANCE = 10;
 Ship.MAX_VELOCITY = 5;
@@ -31,7 +40,12 @@ Ship.PLANET_PULL = 2;
 Ship.prototype.angle = 0;
 
 Ship.prototype.update = function(){
-	if (Utils.distance(this.x, this.y, this.destination.x, this.destination.y) < Planet.PLANET_SIZE) {
+	var distance = Utils.distance(this.x, this.y, this.destination.x, this.destination.y);
+	if (distance < Planet.PLANET_SIZE*3 && !this.animating) {
+		this.animating = true;
+		this.view.animate('width', 1, {duration: Planet.PLANET_SIZE*10});
+		this.view.animate('height', 1, {duration: Planet.PLANET_SIZE*10});
+	} else if (distance < Planet.PLANET_SIZE/2) {
 		Interface.canvas.remove(this.view);
 		this.parentFleet.ships.splice(this.parentFleet.ships.indexOf(this), 1);
 		
@@ -49,7 +63,7 @@ Ship.prototype.update = function(){
 
 	this.x += this.velocity.getXY()[0]; 
 	this.y += this.velocity.getXY()[1];
-	this.angle = ( this.velocity.direction)*180/Math.PI + 90; //TODO fix this
+	this.angle = ( this.velocity.direction)*180/Math.PI + 90;
 	
 	this.view.set('left', this.x.toString());
 	this.view.set('top', this.y.toString());

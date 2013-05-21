@@ -2,7 +2,7 @@
 function validPosition(x, y) {
 	for (var i =0; i < Game.planets.length; i++)
 	{
-		if ( Utils.distance(x, y, Game.planets[i].x, Game.planets[i].y) < Planet.PLANET_SIZE*2)
+		if ( Utils.distance(x, y, Game.planets[i].x, Game.planets[i].y) < Planet.PLANET_SIZE*4)
 			return false;
 		else if (x < Planet.PLANET_SIZE*2 || y < Planet.PLANET_SIZE*2 || 
 				x > Interface.width - Planet.PLANET_SIZE*2 || y > Interface.height - Planet.PLANET_SIZE*2 )
@@ -13,7 +13,7 @@ function validPosition(x, y) {
 
 var Game = {}
 
-Game.NUM_PLANETS = 10;
+Game.NUM_PLANETS = 15;
 Game.NUM_AI_PLAYERS = 1;
 Game.NUM_STARS = 60;
 Game.MAX_INITIAL_POP = 30;
