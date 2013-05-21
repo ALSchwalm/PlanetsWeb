@@ -7,7 +7,13 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.population = _population;
 	this.growthTrack = 0;
 	
-	this.text = new fabric.Text(this.population.toString(), { fontSize: Planet.PLANET_SIZE, fontFamily: 'Arial' });
+	this.text = new fabric.Text(this.population.toString(), { 
+		fontSize: Planet.PLANET_SIZE, 
+		fontFamily: 'Arial',
+		textShadow: 'rgba(100,100,100, 0.5) 1px 1px 1px'
+	});
+	
+	
 	this.circle = new fabric.Circle({
 		radius: Planet.PLANET_SIZE, 
 		fill: 'white',

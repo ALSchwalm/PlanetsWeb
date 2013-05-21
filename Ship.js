@@ -26,10 +26,12 @@ function Ship(_x, _y, _parentFleet) {
 		offsetY: '2'
 	});
 	
-	this.view.animate('width', 7, {duration: Planet.PLANET_SIZE*10});
-	this.view.animate('height', 12, {duration: Planet.PLANET_SIZE*10});
+	this.view.animate('width', Ship.WIDTH, {duration: Planet.PLANET_SIZE*10});
+	this.view.animate('height', Ship.HEIGHT, {duration: Planet.PLANET_SIZE*10});
 }
 
+Ship.WIDTH = 10;
+Ship.HEIGHT = 14;
 Ship.AVOID_FACTOR = 1000;
 Ship.AVOID_DISTANCE = Planet.PLANET_SIZE;
 Ship.SEPARATE_FACTOR = 2;
@@ -40,25 +42,28 @@ Ship.PLANET_PULL = 2;
 Ship.prototype.angle = 0;
 
 Ship.prototype.update = function(){
+	var self = this;
 	var distance = Utils.distance(this.x, this.y, this.destination.x, this.destination.y);
 	if (distance < Planet.PLANET_SIZE*3 && !this.animating) {
 		this.animating = true;
 		this.view.animate('width', 1, {duration: Planet.PLANET_SIZE*10});
-		this.view.animate('height', 1, {duration: Planet.PLANET_SIZE*10});
-	} else if (distance < Planet.PLANET_SIZE/2) {
-		Interface.canvas.remove(this.view);
-		this.parentFleet.ships.splice(this.parentFleet.ships.indexOf(this), 1);
-		
-		if (this.destination.owner != this.owner) {
-			this.destination.addPopulation(-1);
-			if (this.destination.population < 0) {
-				this.destination.changeOwner(this.owner);
-				this.destination.addPopulation(1);
+		this.view.animate('height', 1, {
+			duration: Planet.PLANET_SIZE*10,
+			onComplete: function() {
+				Interface.canvas.remove(self.view);
+				self.parentFleet.ships.splice(self.parentFleet.ships.indexOf(self), 1);
+				
+				if (self.destination.owner != self.owner) {
+					self.destination.addPopulation(-1);
+					if (self.destination.population < 0) {
+						self.destination.changeOwner(self.owner);
+						self.destination.addPopulation(1);
+					}
+				} else {
+					self.destination.addPopulation(1);
+				}
 			}
-		} else {
-			this.destination.addPopulation(1);
-		}
-		
+		});
 	}
 
 	this.x += this.velocity.getXY()[0]; 
