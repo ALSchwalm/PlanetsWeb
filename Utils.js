@@ -14,7 +14,7 @@ Utils.manhattanDistance = function(x1, y1, x2, y2) {
 	return Math.abs(x2 - x1) + Math.abs(y2 - y1);
 }
 
-Utils.colors = ["aqua", "brown", "aquamarine"];
+Utils.colors = ["aqua", "brown", "aquamarine", "DarkGoldenRod ", "OrangeRed", "Tan"];
 
 
 function Vector(magnitude, direction) {

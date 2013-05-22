@@ -8545,8 +8545,9 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 			group = new fabric.Group(group);
 			this.setActiveGroup(group);
 		} else {
-			for (var i in this.getActiveGroup().getObjects())
+			for (var i in this.getActiveGroup().getObjects()) {
 				group.push(this.getActiveGroup().getObjects()[i]);
+			}
 			this.discardActiveGroup();
 			for(var i=0; i < group.length; i++)
 				group[i].set('active', true);
@@ -9076,6 +9077,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 				group = new fabric.Group(group);
 				this.setActiveGroup(group);
 				this.fire('selection:created', { target: target, e: e });
+				target && target.fire('selection:created', { e: e });
 			}
         }
 

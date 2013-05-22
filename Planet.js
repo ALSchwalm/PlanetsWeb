@@ -28,6 +28,8 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.group.lockMovementX = this.group.lockMovementY = true;
 	this.group.planet = this;
 	Interface.canvas.add(this.group);
+	
+	this.group.on("selection:created", function(e) {console.log("selected")});
 }
 
 Planet.PLANET_SIZE = 25;
@@ -50,9 +52,9 @@ Planet.prototype.changeOwner = function(newOwner) {
 	this.circle.fill = newOwner.color;
 	
 	if (this.owner == Game.player)
-	{
-		this.group.selectable  = true;
-	}
+		this.group.selectable = true;
+	else
+		this.group.selectable = false;
 }
 
 Planet.prototype.addPopulation = function(newPopulation) {
@@ -64,12 +66,17 @@ Planet.prototype.setPopulation = function(newPopulation) {
 	this.addPopulation(newPopulation);
 }
 
-Planet.prototype.launchFleet = function(destination) {
-	if (this.population - Math.floor(this.owner.percent*this.population) < 0) return;
+Planet.prototype.launchFleet = function(destination, percent) {
+	if (!percent)
+		percent = this.owner.percent;
+	else if (percent > 1 || !destination)
+		return;
+
+	if (this.population - Math.floor(percent*this.population) < 0) return;
 	
 	this.owner.fleets.push(new Fleet(this.x, this.y, this.owner, 
-			this, destination, Math.floor(this.owner.percent*this.population)));
-	this.addPopulation(-Math.floor(this.owner.percent*this.population));
+			this, destination, Math.floor(percent*this.population)));
+	this.addPopulation(-Math.floor(percent*this.population));
 }
 
 Planet.prototype.launchFleetInt = function(destination, population) {
