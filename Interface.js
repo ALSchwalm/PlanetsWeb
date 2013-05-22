@@ -30,20 +30,17 @@ Interface.handleEvents = function(monitor, options) {
 	else if (monitor == "mouse:down") {
 		if (options.e.button == 1) {
 			Interface.canvas.discardActiveObject();
-			Interface.canvas.discardActiveGroup();
-		} else if (options.e.button == 0) {	
-			for (var i=0; i < Game.planets.length; i++)
-			{
-				if (Game.planets[i].group.containsPoint(options.e)) {
-					if (Interface.canvas.getActiveGroup()) {
-						Interface.canvas.getActiveGroup().forEachObject(function (o) {
-							o.planet.launchFleet(Game.planets[i]);
-						});
-						Interface.canvas.discardActiveGroup();
-						Interface.canvas.discardActiveObject();
-					} 
-					break;
-				}
+		} else if (options.e.button == 0) {
+			var target = Interface.canvas.findTarget(options.e)
+
+			if (target && target.planet && Interface.canvas.getActiveGroup().getObjects().indexOf(target) == -1) {
+				if (Interface.canvas.getActiveGroup()) {
+					Interface.canvas.getActiveGroup().forEachObject(function (o) {
+						o.planet.launchFleet(target.planet);
+					});
+					Interface.canvas.discardActiveGroup();
+				} 
+				
 			}
 		}
 	}

@@ -9048,7 +9048,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
           left: 0
         };
         //this.deactivateAllWithDispatch();
-        target && target.selectable && this.setActiveObject(target, e);
+        //target && target.selectable && this.setActiveObject(target, e);
+
       }
       else if (this._shouldHandleGroupLogic(e, target)) {
         this._handleGroupLogic(e, target);
@@ -9063,8 +9064,19 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         }
 
         if (target !== this.getActiveGroup() && target !== this.getActiveObject()) {
-          //this.deactivateAll();
-          this.setActiveObject(target, e);
+		  	if (target && target.selectable) {
+				var group = [target];
+				if (this.getActiveGroup()) {
+					for (var i in this.getActiveGroup().getObjects())
+						group.push(this.getActiveGroup().getObjects()[i]);
+					this.discardActiveGroup();
+				}
+				for(var i=0; i < group.length; i++)
+					group[i].set('active', true);
+				group = new fabric.Group(group);
+				this.setActiveGroup(group);
+				this.fire('selection:created', { target: target, e: e });
+			}
         }
 
         this._setupCurrentTransform(e, target);
