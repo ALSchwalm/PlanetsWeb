@@ -53,6 +53,10 @@ Planet.prototype.changeOwner = function(newOwner) {
 		this.group.selectable = true;
 	else
 		this.group.selectable = false;
+	
+	if (Interface.canvas.getActiveGroup() &&
+			Interface.canvas.getActiveGroup().getObjects().indexOf(this.group) != -1)
+		Utils.removeFromActiveGroup(this.group);
 }
 
 Planet.prototype.addPopulation = function(newPopulation) {

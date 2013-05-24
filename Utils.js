@@ -16,6 +16,23 @@ Utils.manhattanDistance = function(x1, y1, x2, y2) {
 
 Utils.colors = ["aqua", "brown", "aquamarine", "DarkGoldenRod ", "OrangeRed", "Tan"];
 
+Utils.removeFromActiveGroup = function(obj) {
+	if (!Interface.canvas.getActiveGroup() || 
+			Interface.canvas.getActiveGroup().getObjects().indexOf(obj) == -1)
+		return;
+	var group = [];
+	for(var i in Interface.canvas.getActiveGroup().getObjects()) {
+		if (Interface.canvas.getActiveGroup().getObjects()[i] != obj)
+			group.push(Interface.canvas.getActiveGroup().getObjects()[i])
+	}
+	Interface.canvas.discardActiveGroup();
+	
+	for(var i=0; i < group.length; i++)
+		group[i].set('active', true);
+	var group = new fabric.Group(group);
+	Interface.canvas.setActiveGroup(group);
+	Interface.canvas.fire('selection:created');
+}
 
 function Vector(magnitude, direction) {
 	this.magnitude = magnitude;
