@@ -57,11 +57,12 @@ Interface.removeTargetLines = function() {
 Interface.handleEvents = function(monitor, options) {
 	if (monitor == "mouse:move") {
 		var target = Interface.canvas.findTarget(options.e, true);
-		if (!Game.player.target && target && target.planet && Interface.canvas.getActiveGroup()) {
+		if (!Game.player.target && target && target.planet && Interface.canvas.getActiveGroup() &&
+				Interface.canvas.getActiveGroup().getObjects().indexOf(target) == -1) {
 			Interface.drawTargetLines(target);
 		} else if (Game.player.target != target) {
 			Interface.removeTargetLines();
-		} 
+		}
 		Game.player.target = target;
 	}
 	else if (monitor == "selection:created") {
