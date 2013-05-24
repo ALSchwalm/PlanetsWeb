@@ -7,7 +7,7 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.population = _population;
 	this.growthTrack = 0;
 	
-	this.text = new fabric.Text(this.population.toString(), { 
+	this.text = new fabric.Text(this.population.toString(), {
 		fontSize: Planet.PLANET_SIZE, 
 		fontFamily: 'Arial',
 		textShadow: 'rgba(100,100,100, 0.5) 1px 1px 1px'
@@ -28,8 +28,6 @@ function Planet(_ID, _x, _y, _owner, _population)
 	this.group.lockMovementX = this.group.lockMovementY = true;
 	this.group.planet = this;
 	Interface.canvas.add(this.group);
-	
-	this.group.on("selection:created", function(e) {console.log("selected")});
 }
 
 Planet.PLANET_SIZE = 25;

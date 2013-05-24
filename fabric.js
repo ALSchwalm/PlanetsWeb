@@ -6978,7 +6978,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
 
       return fabric.Collection.remove.call(this, object);
     },
-
+	
     /**
      * Moves an object to the bottom of the stack of drawn objects
      * @param object {fabric.Object} Object to send to back
@@ -8546,7 +8546,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 			this.setActiveGroup(group);
 		} else {
 			for (var i in this.getActiveGroup().getObjects()) {
-				group.push(this.getActiveGroup().getObjects()[i]);
+				if(group.indexOf(this.getActiveGroup().getObjects()[i]) == -1)
+					group.push(this.getActiveGroup().getObjects()[i]);
 			}
 			this.discardActiveGroup();
 			for(var i=0; i < group.length; i++)

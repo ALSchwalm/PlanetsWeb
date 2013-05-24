@@ -13,8 +13,8 @@ function validPosition(x, y) {
 
 var Game = {}
 
-Game.NUM_PLANETS = 25;
-Game.NUM_AI_PLAYERS = 5;
+Game.NUM_PLANETS = 30;
+Game.NUM_AI_PLAYERS = 3;
 Game.NUM_STARS = 60;
 Game.MAX_INITIAL_POP = 30;
 Game.MIN_INITIAL_POP = 10;
