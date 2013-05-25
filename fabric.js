@@ -6376,7 +6376,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
       this[prop] = value;
 
       this.calcOffset();
-      this.renderAll();
+      //this.renderAll();
 
       return this;
     },
@@ -6490,7 +6490,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
         this.clearContext(this.contextTop);
       }
       this.fire('canvas:cleared');
-      this.renderAll();
+      //this.renderAll();
       return this;
     },
 
@@ -6538,6 +6538,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
       for (var i = 0, length = this._objects.length; i < length; ++i) {
         if (!activeGroup ||
             (activeGroup && this._objects[i] && !activeGroup.contains(this._objects[i]))) {
+			if (this._objects[i] && this._objects[i].norender) continue;
           this._draw(canvasToDrawOn, this._objects[i]);
         }
       }
@@ -6681,7 +6682,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
                 : canvasEl.toDataURL('image/' + format);
 
       this.contextTop && this.clearContext(this.contextTop);
-      this.renderAll();
+      //this.renderAll();
       return data;
     },
 
@@ -6730,7 +6731,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
       }
 
       this.contextTop && this.clearContext(this.contextTop);
-      this.renderAll();
+      //this.renderAll();
 
       return data;
     },
@@ -6799,7 +6800,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
      */
     centerObjectH: function (object) {
       object.set('left', this.getCenter().left);
-      this.renderAll();
+      //this.renderAll();
       return this;
     },
 
@@ -6811,7 +6812,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
      */
     centerObjectV: function (object) {
       object.set('top', this.getCenter().top);
-      this.renderAll();
+      //this.renderAll();
       return this;
     },
 
@@ -6988,7 +6989,7 @@ fabric.Shadow = fabric.util.createClass(/** @lends fabric.Shadow.prototype */ {
     sendToBack: function (object) {
       removeFromArray(this._objects, object);
       this._objects.unshift(object);
-      return this.renderAll && this.renderAll();
+      return this; //this.renderAll && this.renderAll();
     },
 
     /**
@@ -7535,7 +7536,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
         // rendered inconsistently across browsers
         // Firefox 4, for example, renders a dot,
         // whereas Chrome 10 renders nothing
-        this.canvas.renderAll();
+        //this.canvas.renderAll();
         return;
       }
 
@@ -7553,7 +7554,7 @@ fabric.BaseBrush = fabric.util.createClass(/** @lends fabric.BaseBrush.prototype
 
       this.canvas.clearContext(this.canvas.contextTop);
       this.removeShadowStyles();
-      this.canvas.renderAll();
+      //this.canvas.renderAll();
 
       // fire event 'path' created
       this.canvas.fire('path:created', { path: path });
@@ -7635,7 +7636,7 @@ fabric.CircleBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabri
     this.canvas.clearContext(this.canvas.contextTop);
     this.removeShadowStyles();
     this.canvas.renderOnAddition = originalRenderOnAddition;
-    this.canvas.renderAll();
+    //this.canvas.renderAll();
   },
 
   /**
@@ -7762,7 +7763,7 @@ fabric.SprayBrush = fabric.util.createClass( fabric.BaseBrush, /** @lends fabric
     this.canvas.clearContext(this.canvas.contextTop);
     this.removeShadowStyles();
     this.canvas.renderOnAddition = originalRenderOnAddition;
-    this.canvas.renderAll();
+    //this.canvas.renderAll();
   },
 
   /**
@@ -8717,7 +8718,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
       this._activeObject = object;
       object.set('active', true);
 
-      this.renderAll();
+      //this.renderAll();
 
       this.fire('object:selected', { target: object, e: e });
       object.fire('selected', { e: e });
@@ -8893,6 +8894,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      * @param {Event} e Event object fired on mousedown
      */
     _onMouseDown: function (e) {
+		this.mousedown = true;
       this.__onMouseDown(e);
 
       !fabric.isTouchSupported && addListener(fabric.document, 'mouseup', this._onMouseUp);
@@ -8910,6 +8912,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      * @param {Event} e Event object fired on mouseup
      */
     _onMouseUp: function (e) {
+		this.mousedown = false;
       this.__onMouseUp(e);
 
       !fabric.isTouchSupported && removeListener(fabric.document, 'mouseup', this._onMouseUp);
@@ -8927,7 +8930,8 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
      * @param {Event} e Event object fired on mousemove
      */
     _onMouseMove: function (e) {
-      e.preventDefault && e.preventDefault();
+		//if (!this.mousedown) return;
+      //e.preventDefault && e.preventDefault();
       this.__onMouseMove(e);
     },
 
@@ -8995,7 +8999,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
 
       // clear selection
       this._groupSelector = null;
-      this.renderAll();
+      //this.renderAll();
 
       this._setCursorFromEvent(e, target);
 
@@ -9030,7 +9034,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
       if (this.isDrawingMode) {
         pointer = this.getPointer(e);
         this._isCurrentlyDrawing = true;
-        this.discardActiveObject().renderAll();
+        //this.discardActiveObject().renderAll();
         this.freeDrawingBrush.onMouseDown(pointer);
         this.fire('mouse:down', { e: e });
         return;
@@ -9085,7 +9089,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         this._setupCurrentTransform(e, target);
       }
       // we must renderAll so that active image is placed on the top canvas
-      this.renderAll();
+      //this.renderAll();
 
       this.fire('mouse:down', { target: target, e: e });
       target && target.fire('mousedown', { e: e });
@@ -9131,7 +9135,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         groupSelector.left = pointer.x - this._offset.left - groupSelector.ex;
         groupSelector.top = pointer.y - this._offset.top - groupSelector.ey;
         this.renderTop();
-      }
+      }/*
       else if (!this._currentTransform) {
 
         // alias style to elimintate unnecessary lookup
@@ -9226,7 +9230,7 @@ fabric.PatternBrush = fabric.util.createClass(fabric.PencilBrush, /** @lends fab
         }
 
         //this.renderAll();
-      }
+      }*/
       this.fire('mouse:move', { target: target, e: e });
       target && target.fire('mousemove', { e: e });
     },
@@ -9299,7 +9303,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       duration: this.FX_DURATION,
       onChange: function(value) {
         object.set('left', value);
-        _this.renderAll();
+        //_this.renderAll();
         onChange();
       },
       onComplete: function() {
@@ -9332,7 +9336,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       duration: this.FX_DURATION,
       onChange: function(value) {
         object.set('top', value);
-        _this.renderAll();
+        //_this.renderAll();
         onChange();
       },
       onComplete: function() {
@@ -9368,7 +9372,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       },
       onChange: function(value) {
         object.set('opacity', value);
-        _this.renderAll();
+        //_this.renderAll();
         onChange();
       },
       onComplete: function () {
@@ -9571,7 +9575,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
         _this.backgroundImageOpacity = serialized.backgroundImageOpacity;
         _this.backgroundImageStretch = serialized.backgroundImageStretch;
 
-        _this.renderAll();
+        //_this.renderAll();
 
         backgroundImageLoaded = true;
 
@@ -9588,7 +9592,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
         _this.overlayImageLeft = serialized.overlayImageLeft || 0;
         _this.overlayImageTop = serialized.overlayImageTop || 0;
 
-        _this.renderAll();
+        //_this.renderAll();
         overlayImageLoaded = true;
 
         cbIfLoaded();
@@ -9601,7 +9605,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
     if (serialized.background) {
       this.setBackgroundColor(serialized.background, function() {
 
-        _this.renderAll();
+        //_this.renderAll();
         backgroundPatternLoaded = true;
 
         cbIfLoaded();
@@ -9683,7 +9687,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
     clone.clipTo = this.clipTo;
     if (this.backgroundImage) {
       clone.setBackgroundImage(this.backgroundImage.src, function() {
-        clone.renderAll();
+        //clone.renderAll();
         callback && callback(clone);
       });
       clone.backgroundImageOpacity = this.backgroundImageOpacity;
@@ -10325,7 +10329,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       this.clipTo && fabric.util.clipContext(this, ctx);
       this._render(ctx, noTransform);
       this.clipTo && ctx.restore();
-      this._removeShadow(ctx);
+      //this._removeShadow(ctx);
 
       if (this.active && !noTransform) {
         this.drawBorders(ctx);
@@ -10374,7 +10378,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
         ctx.restore();
       }
       if (this.shadow && !this.shadow.affectStroke) {
-        this._removeShadow(ctx);
+        //this._removeShadow(ctx);
       }
     },
 
@@ -10403,7 +10407,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
       else {
         this._stroke ? this._stroke(ctx) : ctx.stroke();
       }
-      this._removeShadow(ctx);
+      //this._removeShadow(ctx);
     },
 
     /**
@@ -13782,7 +13786,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       }
       this.clipTo && ctx.restore();
 
-      this._removeShadow(ctx);
+      //this._removeShadow(ctx);
 
       if (!noTransform && this.active) {
         this.drawBorders(ctx);
@@ -14106,7 +14110,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         this.paths[i].render(ctx, true);
       }
       this.clipTo && ctx.restore();
-      this._removeShadow(ctx);
+      //this._removeShadow(ctx);
 
       if (this.active) {
         this.drawBorders(ctx);
@@ -14505,7 +14509,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
         this.drawControls(ctx);
       }
       ctx.restore();
-      this.setCoords();
+      //this.setCoords();
     },
 
     /**
@@ -14840,7 +14844,7 @@ fabric.util.object.extend(fabric.Object.prototype, /** @lends fabric.Object.prot
       this.clipTo && fabric.util.clipContext(this, ctx);
       this._render(ctx);
       if (this.shadow && !this.shadow.affectStroke) {
-        this._removeShadow(ctx);
+        //this._removeShadow(ctx);
       }
       this._renderStroke(ctx);
       this.clipTo && ctx.restore();
@@ -15264,7 +15268,7 @@ fabric.util.object.extend(fabric.StaticCanvas.prototype, /** @lends fabric.Stati
    */
   straightenObject: function (object) {
     object.straighten();
-    this.renderAll();
+    //this.renderAll();
     return this;
   },
 
@@ -16319,7 +16323,7 @@ fabric.Image.filters.Pixelate.fromObject = function(object) {
 
       this.transform(ctx, fabric.isLikelyNode);
 
-      this._setTextStyles(ctx);
+      ctx.font = this._getFontDeclaration();//this._setTextStyles(ctx);
 
       var textLines = this.text.split(/\r?\n/);
 
@@ -16348,7 +16352,7 @@ fabric.Image.filters.Pixelate.fromObject = function(object) {
       this._setBoundaries(ctx, textLines);
       this._totalLineHeight = 0;
 
-      this.setCoords();
+      //this.setCoords();
     },
 
     /**

@@ -34,6 +34,13 @@ Utils.removeFromActiveGroup = function(obj) {
 	Interface.canvas.fire('selection:created');
 }
 
+Utils.findTarget = function(e) {
+	for(var i=0; i < Game.planets.length; i++) {
+		if (Utils.distance(e.pageX, e.pageY, Game.planets[i].x, Game.planets[i].y) < Planet.PLANET_SIZE)
+			return Game.planets[i].group;
+	}
+}
+
 function Vector(magnitude, direction) {
 	this.magnitude = magnitude;
 	this.direction = direction;

@@ -20,12 +20,6 @@ function Ship(_x, _y, _parentFleet) {
         stroke: 'black'
 	});
 	
-	this.view.setShadow({
-		color: 'rgba(255,255,255, 0.1)',
-		offsetX: '2',
-		offsetY: '2'
-	});
-	
 	this.view.animate('width', Ship.WIDTH, {duration: Planet.PLANET_SIZE*10});
 	this.view.animate('height', Ship.HEIGHT, {duration: Planet.PLANET_SIZE*10});
 }
