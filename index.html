@@ -8,6 +8,29 @@ html, body {
   margin: 0px;
   overflow: hidden;
 }
+.panel {
+	top:  0;
+	left: 0;
+	position: absolute;
+	width:180px;
+	cursor: default;
+}
+	
+.run {
+	background-color:rgba(86, 165, 236, 0.7);
+	border-radius: 10px;
+	border:2px solid;
+	width: 100%;
+	
+}
+
+.settings {
+	background-color:rgba(86, 165, 236, 0.7);
+	border-radius: 10px;
+	border:2px solid;
+	width: 100%;
+}
+
 </style>
 </head>
 <body>
@@ -15,6 +38,7 @@ html, body {
 <canvas id="background" width="640" height="480">
 </canvas>
 
+<script type="text/javascript" src="jquery-2.0.1.js"></script>
 <script type="text/javascript" src="fabric.js"></script>
 <script type="text/javascript" src="Game.js"></script>
 <script type="text/javascript" src="Interface.js"></script>
@@ -24,10 +48,31 @@ html, body {
 <script type="text/javascript" src="Ship.js"></script>
 <script type="text/javascript" src="Fleet.js"></script>
 <script type="text/javascript" src="Utils.js"></script>
-<script type="text/javascript">
-	Game.setup();
-	setInterval(Game.update, 1000/50);
-	setInterval(Game.applyPhysics, 1000/20);
+
+<div class="panel" id="panel">
+	<div class="run" id="run" style="text-align:center;">
+		Start
+	</div>
+
+	<div class="settings" id="settings">
+		<p>
+		Gravity: <input class="input" type="number" min="0.1" max="5" id="gravity" step=0.1 value=2 onchange="Utils.updateSettings()"><br>
+		Planets: <input class="input" type="number" min="5" max="25" id="planets" value=15 onchange="Utils.updateSettings()"><br>
+		Max Velocity: <input class="input" type="number" min="0.1" max="25" id="maxVelocity" step=0.1 value=5 onchange="Utils.updateSettings()"><br>
+		</p>
+	</div>
+</div>
+
+<script>
+$('#run').click(function() {
+	if($('#settings').is(":visible")) {
+		Game.run();
+	}
+	$('#settings').animate({
+		height: 'toggle'
+	}, 1000);
+});
+
 </script>
 
 </body>

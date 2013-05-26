@@ -12,18 +12,18 @@ Interface.canvas.hoverCursor = 'default'
 Interface.canvas.moveCursor  = 'default'
 Interface.canvas.renderAll();
 
-Interface.width = Interface.canvas.getWidth();
-Interface.height = Interface.canvas.getHeight();
+Interface.setup = function() {
+	Interface.monitorEvent = function(monitor) {
+		Interface.canvas.on(monitor, function(e) {Interface.handleEvents(monitor, e);});
+	}
 
-Interface.monitorEvent = function(monitor) {
-	Interface.canvas.on(monitor, function(e) {Interface.handleEvents(monitor, e);});
+	Interface.monitorEvent("selection:created");
+	Interface.monitorEvent("mouse:down");
+	Interface.monitorEvent("mouse:move");
+
+	Interface.lines = [];
 }
 
-Interface.monitorEvent("selection:created");
-Interface.monitorEvent("mouse:down");
-Interface.monitorEvent("mouse:move");
-
-Interface.lines = [];
 Interface.drawTargetLines = function(target) {
 	Interface.canvas.getActiveGroup().forEachObject( function(playerPlanet) {
 		var coords = [playerPlanet.originalLeft, playerPlanet.originalTop, target.left, target.top];
@@ -74,7 +74,6 @@ Interface.handleEvents = function(monitor, options) {
 			Interface.canvas.discardActiveGroup();
 		} else if (options.e.button == 0) {
 			var target = Utils.findTarget(options.e);
-			console.log(options.e);
 
 			if (target && target.planet && Interface.canvas.getActiveGroup() && 
 					Interface.canvas.getActiveGroup().getObjects().indexOf(target) == -1) {

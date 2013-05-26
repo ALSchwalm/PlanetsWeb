@@ -16,6 +16,13 @@ Utils.manhattanDistance = function(x1, y1, x2, y2) {
 
 Utils.colors = ["aqua", "brown", "aquamarine", "DarkGoldenRod ", "OrangeRed", "Tan"];
 
+Utils.updateSettings = function() {
+	Game.NUM_PLANETS = parseInt(document.getElementById("planets").value);
+	Ship.PLANET_PULL = parseFloat(document.getElementById("gravity").value);
+	Ship.MAX_VELOCITY = parseFloat(document.getElementById("maxVelocity").value);
+}
+
+
 Utils.removeFromActiveGroup = function(obj) {
 	if (!Interface.canvas.getActiveGroup() || 
 			Interface.canvas.getActiveGroup().getObjects().indexOf(obj) == -1)

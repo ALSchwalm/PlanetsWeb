@@ -21,9 +21,33 @@ Game.MIN_INITIAL_POP = 10;
 Game.PLAYER_INITIAL_POP = 100;
 Game.AI_INITIAL_POP = 100;
 
-Game.player = null;
-Game.planets = [];
-Game.aiPlayers = [];
+Game.run = function() {
+	Game.clear();
+	Utils.updateSettings()
+	Interface.setup();
+	Game.setup();
+	if(!Game.updateInterval)
+		Game.updateInterval=setInterval(Game.update, 1000/50);
+	else{
+		window.clearInterval(Game.updateInterval);
+		Game.updateInterval=setInterval(Game.update, 1000/50);
+	}
+	
+	if(!Game.updatePhysics)
+		setInterval(Game.applyPhysics, 1000/20);
+	else {
+		window.clearInterval(Game.updatePhysics);
+		Game.updateInterval=setInterval(Game.applyPhysics, 1000/20);
+	}
+}
+
+Game.clear = function() {
+	Interface.canvas.clear();
+	
+	Game.player = null;
+	Game.planets = [];
+	Game.aiPlayers = [];
+}
 
 Game.update = function(){
 	for(var i=0; i < Game.aiPlayers.length; i++) {
