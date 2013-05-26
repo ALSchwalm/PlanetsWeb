@@ -20,6 +20,8 @@ Utils.updateSettings = function() {
 	Game.NUM_PLANETS = parseInt(document.getElementById("planets").value);
 	Ship.PLANET_PULL = parseFloat(document.getElementById("gravity").value);
 	Ship.MAX_VELOCITY = parseFloat(document.getElementById("maxVelocity").value);
+	Game.AI_INITIAL_POP = Game.PLAYER_INITIAL_POP = parseFloat(document.getElementById("initialPop").value);
+	Game.NUM_STARS = parseFloat(document.getElementById("starCount").value);
 }
 
 

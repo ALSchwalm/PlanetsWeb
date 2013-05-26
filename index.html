@@ -20,8 +20,7 @@ html, body {
 	background-color:rgba(86, 165, 236, 0.7);
 	border-radius: 10px;
 	border:2px solid;
-	width: 100%;
-	
+	width: 100%;	
 }
 
 .settings {
@@ -29,6 +28,15 @@ html, body {
 	border-radius: 10px;
 	border:2px solid;
 	width: 100%;
+	line-height:160%;
+}
+
+.labels {
+	float: left;
+}
+
+.input {
+	width: 70px;
 }
 
 </style>
@@ -55,11 +63,26 @@ html, body {
 	</div>
 
 	<div class="settings" id="settings">
-		<p>
-		Gravity: <input class="input" type="number" min="0.1" max="5" id="gravity" step=0.1 value=2 onchange="Utils.updateSettings()"><br>
-		Planets: <input class="input" type="number" min="5" max="25" id="planets" value=15 onchange="Utils.updateSettings()"><br>
-		Max Velocity: <input class="input" type="number" min="0.1" max="25" id="maxVelocity" step=0.1 value=5 onchange="Utils.updateSettings()"><br>
-		</p>
+		
+		<div class="labels" id="labels">
+			<p>
+			Gravity:<br>
+			Planets:<br>
+			Max Velocity:<br>
+			Initial Pop:<br>
+			Star Count:<br>
+			</p>
+		</div>
+		
+		<div class="inputs" id="inputs">
+			<p>
+			<input class="input" type="number" min="0.1" max="5" id="gravity" step=0.1 value=2 onchange="Utils.updateSettings()"><br>
+			<input class="input" type="number" min="5" max="25" id="planets" value=15 onchange="Utils.updateSettings()"><br>
+			<input class="input" type="number" min="0.1" max="25" id="maxVelocity" step=0.1 value=5 onchange="Utils.updateSettings()"><br>
+			<input class="input" type="number" min="1" max="400" id="initialPop" step=1 value=100 onchange="Utils.updateSettings()"><br>
+			<input class="input" type="number" min="0" max="200" id="starCount" step=1 value=60 onchange="Utils.updateSettings()"><br>
+			</p>
+		</div>
 	</div>
 </div>
 
