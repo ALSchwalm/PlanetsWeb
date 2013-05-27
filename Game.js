@@ -34,10 +34,10 @@ Game.run = function() {
 	}
 	
 	if(!Game.updatePhysics)
-		setInterval(Game.applyPhysics, 1000/20);
+		Game.updatePhysics=setInterval(Game.applyPhysics, 1000/20);
 	else {
 		window.clearInterval(Game.updatePhysics);
-		Game.updateInterval=setInterval(Game.applyPhysics, 1000/20);
+		Game.updatePhysics=setInterval(Game.applyPhysics, 1000/20);
 	}
 }
 
@@ -47,6 +47,30 @@ Game.clear = function() {
 	Game.player = null;
 	Game.planets = [];
 	Game.aiPlayers = [];
+}
+
+Game.end = function(winner) {
+
+	var winString;
+	if(winner == Game.player)
+		winString = "winner";
+	else
+		winString = "loser";
+	Game.clear();
+
+	var winText = new fabric.Text(winString, {
+		top: window.innerHeight/2,
+		left: window.innerWidth/2,
+		fontSize: 40, 
+		fontFamily: 'Arial',
+		fill: 'white'
+	});
+	Interface.canvas.add(winText);
+	Interface.canvas.renderAll();
+	
+	window.clearInterval(Game.updatePhysics);
+	window.clearInterval(Game.updateInterval);
+
 }
 
 Game.update = function(){
@@ -76,6 +100,7 @@ Game.applyPhysics = function() {
 			Game.aiPlayers[i].fleets[j].applyPhysics();
 		}
 	}
+	
 	
 	for(var i=0; i < Game.player.fleets.length; i++) {
 		Game.player.fleets[i].applyPhysics();

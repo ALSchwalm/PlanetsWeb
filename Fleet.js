@@ -14,8 +14,6 @@ function Fleet(_x, _y, _owner, _source, _destination, _population) {
 	{ 
 		this.ships.push(new Ship(this.x, this.y, this));
 		this.views.push(this.ships[this.ships.length-1].view);
-		
-		//TODO make group of every ship.
 	}
 	
 	Interface.canvas.add.apply(Interface.canvas, this.views);

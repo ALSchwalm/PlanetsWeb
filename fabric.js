@@ -16323,7 +16323,7 @@ fabric.Image.filters.Pixelate.fromObject = function(object) {
 
       this.transform(ctx, fabric.isLikelyNode);
 
-      ctx.font = this._getFontDeclaration();//this._setTextStyles(ctx);
+      this._setTextStyles(ctx);
 
       var textLines = this.text.split(/\r?\n/);
 
