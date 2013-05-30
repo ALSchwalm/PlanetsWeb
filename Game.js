@@ -56,7 +56,6 @@ Game.end = function(winner) {
 		winString = "winner";
 	else
 		winString = "loser";
-	Game.clear();
 
 	var winText = new fabric.Text(winString, {
 		top: window.innerHeight/2,
