@@ -60,20 +60,6 @@ Planet.prototype.changeOwner = function(newOwner) {
 
 Planet.prototype.addPopulation = function(newPopulation) {
 	this.population += newPopulation;
-	
-	var startingPlanet = null;
-	for(var i=0; i < Game.planets.length; i++) { 
-		if(Game.planets[i].owner && !startingPlanet) {
-			startingPlanet = Game.planets[i];
-		} else if (Game.planets[i].owner && startingPlanet && Game.planets[i].owner != startingPlanet.owner) {
-			startingPlanet = null;
-			break;
-		}
-	}
-
-	if(startingPlanet)
-		Game.end(startingPlanet.owner);
-	
 }
 
 Planet.prototype.setPopulation = function(newPopulation) {

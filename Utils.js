@@ -23,6 +23,7 @@ Utils.updateSettings = function() {
 	Game.AI_INITIAL_POP = Game.PLAYER_INITIAL_POP = parseInt(document.getElementById("initialPop").value);
 	Game.NUM_STARS = parseInt(document.getElementById("starCount").value);
 	Game.NUM_AI_PLAYERS = parseInt(document.getElementById("aiPlayers").value);
+	Planet.GROWTH_RATE = parseInt(document.getElementById("growthRate").value);
 }
 
 

@@ -50,7 +50,6 @@ Game.clear = function() {
 }
 
 Game.end = function(winner) {
-
 	var winString;
 	if(winner == Game.player)
 		winString = "winner";

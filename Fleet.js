@@ -25,6 +25,27 @@ Fleet.prototype.update = function() {
 	}
 	if (this.ships.length == 0) {
 		this.owner.fleets.splice(this.owner.fleets.indexOf(this), 1);
+	
+		var startingPlanet = null;
+		for(var i=0; i < Game.planets.length; i++) { 
+			if(Game.planets[i].owner && !startingPlanet) {
+				startingPlanet = Game.planets[i];
+			} else if (Game.planets[i].owner && startingPlanet && Game.planets[i].owner != startingPlanet.owner) {
+				startingPlanet = null;
+				break;
+			}
+		}
+		
+		//Do not end the game while other fleets in flight
+		var otherFleets = false;
+		for(var i=0; i < Game.aiPlayers.length; i++) {
+			if (Game.aiPlayers[i].fleets.length)
+				otherFleets = true;
+		}
+		if (Game.player.fleets.length) otherFleets = true;
+		
+		if(startingPlanet && !otherFleets)
+			Game.end(startingPlanet.owner);
 	}
 }
 
