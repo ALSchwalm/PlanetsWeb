@@ -3,7 +3,7 @@ Planetary Triumph Online
 
 A javascript based game reminiscent of Galactic Conquest.
 
-Try out the game [here](https://googledrive.com/host/0BwSnjeZk1C5RQXZvTUc0NUtOc2M/). (tested with firefox 21.0 and chrome 27.0.1453.110)  
+Try out the game [here](http://alschwalm.github.io/PlanetsWeb/). (tested with firefox 21.0 and chrome 27.0.1453.110)  
 Gameplay
 ========
 
