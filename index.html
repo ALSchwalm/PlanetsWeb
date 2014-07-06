@@ -1,91 +1,91 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <link href="//fonts.googleapis.com/css?family=Open+Sans:100,300,400,600,800" rel="stylesheet" type="text/css">
-<style>
-html, body {
-  font-family: "open sans", sans-serif;
-  width:  100%;
-  height: 100%;
-  margin: 0px;
-  overflow: hidden;
-}
-.panel {
-	top:  0;
-	left: 0;
-	position: absolute;
-	width:180px;
-	cursor: default;
-}
-	
-.runMenu {
-	background-color:rgba(86, 165, 236, 0.7);
-	border-radius: 10px;
-	border:2px solid;
-	width: 100%;
-}
+    <head>
+        <link href="//fonts.googleapis.com/css?family=Open+Sans:100,300,400,600,800" rel="stylesheet" type="text/css">
+        <style>
+         html, body {
+             font-family: "open sans", sans-serif;
+             width:  100%;
+             height: 100%;
+             margin: 0px;
+             overflow: hidden;
+         }
+         .panel {
+	     top:  0;
+	     left: 0;
+	     position: absolute;
+	     width: 200px;
+	     cursor: default;
+         }
 
-.run {
-	padding-left:5%;
-	float: left;
-	border-right: 2px solid black;
-	width: 40%;
-}
+         .runMenu {
+	     background-color:rgba(86, 165, 236, 0.7);
+	     border-radius: 10px;
+	     border:2px solid;
+	     width: 100%;
+         }
 
-.toggle {
-	padding-right:5%;
-	text-align:right;
-}
+         .run {
+	     padding-left:5%;
+	     float: left;
+	     border-right: 2px solid black;
+	     width: 40%;
+         }
 
-.settings {
-	background-color:rgba(86, 165, 236, 0.7);
-	border-radius: 10px;
-	border:2px solid;
-	width: 100%;
-	line-height:160%;
-}
+         .toggle {
+	     padding-right:5%;
+	     text-align:right;
+         }
 
-.labels {
-	float: left;
-	padding-left:5%;
-}
+         .settings {
+	     background-color:rgba(86, 165, 236, 0.7);
+	     border-radius: 10px;
+	     border:2px solid;
+	     width: 100%;
+	     line-height:160%;
+         }
 
-.input {
-	height: 14px;
-	width: 70px;
-}
+         .labels {
+	     float: left;
+	     padding-left:5%;
+         }
 
-</style>
-</head>
-<body>
+         .input {
+	     height: 14px;
+	     width: 70px;
+         }
 
-<canvas id="background" width="640" height="480">
-</canvas>
+        </style>
+    </head>
+    <body>
 
-<script type="text/javascript" src="jquery-2.0.1.js"></script>
-<script type="text/javascript" src="fabric.js"></script>
-<script type="text/javascript" src="Game.js"></script>
-<script type="text/javascript" src="Interface.js"></script>
-<script type="text/javascript" src="Planet.js"></script>
-<script type="text/javascript" src="Player.js"></script>
-<script type="text/javascript" src="Star.js"></script>
-<script type="text/javascript" src="Ship.js"></script>
-<script type="text/javascript" src="Fleet.js"></script>
-<script type="text/javascript" src="Utils.js"></script>
+        <canvas id="background" width="640" height="480">
+        </canvas>
 
-<div class="panel" id="panel">
-	<div class="runMenu" id="runMenu">
+        <script type="text/javascript" src="jquery-2.0.1.js"></script>
+        <script type="text/javascript" src="fabric.js"></script>
+        <script type="text/javascript" src="Game.js"></script>
+        <script type="text/javascript" src="Interface.js"></script>
+        <script type="text/javascript" src="Planet.js"></script>
+        <script type="text/javascript" src="Player.js"></script>
+        <script type="text/javascript" src="Star.js"></script>
+        <script type="text/javascript" src="Ship.js"></script>
+        <script type="text/javascript" src="Fleet.js"></script>
+        <script type="text/javascript" src="Utils.js"></script>
+
+        <div class="panel" id="panel">
+	    <div class="runMenu" id="runMenu">
 		<div class="run" id="run">
-			Start
+		    Start
 		</div>
 		<div class="toggle" id="toggle">
-			Toggle Menu
+		    Menu
 		</div>
-	</div>
+	    </div>
 
-	<div class="settings" id="settings">
+	    <div class="settings" id="settings">
 		<div class="labels" id="labels">
-			<p>
+		    <p>
 			Gravity:<br>
 			Planets:<br>
 			Growth Rate:<br>
@@ -93,11 +93,11 @@ html, body {
 			Initial Pop:<br>
 			Star Count:<br>
 			AI Players:<br>
-			</p>
+		    </p>
 		</div>
-		
+
 		<div class="inputs" id="inputs">
-			<p>
+		    <p>
 			<input class="input" type="number" min="0.1" max="5" id="gravity" step=0.1 value=2 onchange="Utils.updateSettings()"><br>
 			<input class="input" type="number" min="5" max="50" id="planets" value=15 onchange="Utils.updateSettings()"><br>
 			<input class="input" type="number" min="0" max="100" id="growthRate" value=1 onchange="Utils.updateSettings()"><br>
@@ -105,28 +105,28 @@ html, body {
 			<input class="input" type="number" min="1" max="400" id="initialPop" step=1 value=100 onchange="Utils.updateSettings()"><br>
 			<input class="input" type="number" min="0" max="200" id="starCount" step=1 value=60 onchange="Utils.updateSettings()"><br>
 			<input class="input" type="number" min="1" max="5" id="aiPlayers" step=1 value=1 onchange="Utils.updateSettings()"><br>
-			</p>
+		    </p>
 		</div>
-	</div>
-</div>
+	    </div>
+        </div>
 
-<script>
-$('#run').click(function() {
-	Game.run();
-	if($('#settings').is(":visible")) {
-		$('#settings').animate({
-			height: 'toggle'
-		}, 500);
-	}
-});
+        <script>
+         $('#run').click(function() {
+	     Game.run();
+	     if($('#settings').is(":visible")) {
+		 $('#settings').animate({
+		     height: 'toggle'
+		 }, 500);
+	     }
+         });
 
-$('#toggle').click(function() {
-	$('#settings').animate({
-		height: 'toggle'
-	}, 500);
-});
+         $('#toggle').click(function() {
+	     $('#settings').animate({
+		 height: 'toggle'
+	     }, 500);
+         });
 
-</script>
+        </script>
 
-</body>
-</html> 
+    </body>
+</html>
